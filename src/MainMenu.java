@@ -13,10 +13,10 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Creating buttons with images for each game
-        JButton game1Button = createGameButton("Dragon Tale", "dragon.png");
-        JButton game2Button = createGameButton("Tank Shooter", "tank.jpg");
-        JButton game3Button = createGameButton("Snake & Ladder", "snakeladder.png");
-        JButton game4Button = createGameButton("Flappt Bee", "flappy.png");
+        JButton game1Button = createGameButton("Dragon Tale", "dragon.png", 450, 450);
+        JButton game2Button = createGameButton("Tank Shooter", "tank.jpg", 450, 450);
+        JButton game3Button = createGameButton("Snake & Ladder", "snakeladder.png", 450, 450);
+        JButton game4Button = createGameButton("Flappt Bee", "flappy.png", 450, 450);
 
         // Creating a panel with a grid layout for the game menu
         JPanel panel = new JPanel(new GridLayout(2, 2, 10, 10));
@@ -40,11 +40,24 @@ public class MainMenu extends JFrame {
         setLocationRelativeTo(null); // Center the frame on the screen
     }
 
-    private JButton createGameButton(String gameName, String imageName) {
+    private JButton createGameButton(String gameName, String imageName, int width, int height) {
         // Creating a button with an image
         JButton button = new JButton(gameName);
-        ImageIcon icon = new ImageIcon(getClass().getResource(imageName));
-        button.setIcon(icon);
+
+        try {
+            ImageIcon originalIcon = new ImageIcon(getClass().getResource(imageName));
+            Image originalImage = originalIcon.getImage();
+            Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            button.setIcon(scaledIcon);
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle the exception appropriately in your application
+        }
+
+        // Set font size for the text
+        Font buttonFont = button.getFont();
+        button.setFont(new Font(buttonFont.getName(), Font.BOLD, 30)); // You can adjust the font size (16 in this case)
+
 
         // Adjusting button properties
         button.setHorizontalTextPosition(SwingConstants.CENTER);
